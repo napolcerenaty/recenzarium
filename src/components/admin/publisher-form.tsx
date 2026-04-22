@@ -25,6 +25,8 @@ type PublisherData = {
   parentId: string | null;
   collaborationInfo: string;
   collaborationUrl: string;
+  followersRequirement: string;
+  dataSource: string;
 };
 
 type Props = {
@@ -153,6 +155,15 @@ export function PublisherForm({ action, publishers, defaultValues, cancelHref = 
         <CardHeader><CardTitle className="text-base">Informacje o współpracach</CardTitle></CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
+            <Label htmlFor="followersRequirement">Wymagania dot. obserwujących</Label>
+            <Input
+              id="followersRequirement"
+              name="followersRequirement"
+              placeholder="np. min. 1000 obserwujących na IG"
+              defaultValue={defaultValues?.followersRequirement}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
             <Label htmlFor="submissionEmail">Email do zgłoszeń</Label>
             <Input
               id="submissionEmail"
@@ -181,6 +192,18 @@ export function PublisherForm({ action, publishers, defaultValues, cancelHref = 
               defaultValue={defaultValues?.collaborationInfo}
             />
             <p className="text-xs text-muted-foreground">Obsługuje składnię Markdown.</p>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="dataSource">Źródło danych</Label>
+            <Input
+              id="dataSource"
+              name="dataSource"
+              placeholder="np. https://... lub nazwa portalu / strony"
+              defaultValue={defaultValues?.dataSource}
+            />
+            <p className="text-xs text-muted-foreground">
+              Skąd pochodzi informacja — link lub opis źródła.
+            </p>
           </div>
         </CardContent>
       </Card>

@@ -39,6 +39,8 @@ export async function createPublisher(data: {
   parentId?: string | null;
   collaborationInfo: string;
   collaborationUrl: string;
+  followersRequirement: string;
+  dataSource: string;
   isActive: boolean;
 }) {
   return prisma.publisher.create({ data });
@@ -60,6 +62,8 @@ export async function updatePublisher(
     parentId: string | null;
     collaborationInfo: string;
     collaborationUrl: string;
+    followersRequirement: string;
+    dataSource: string;
     isActive: boolean;
   }>
 ) {

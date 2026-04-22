@@ -32,6 +32,8 @@ function extractPublisherFields(formData: FormData) {
     parentId: isImprint && rawParentId ? rawParentId : null,
     collaborationInfo: (formData.get("collaborationInfo") as string) ?? "",
     collaborationUrl: (formData.get("collaborationUrl") as string) ?? "",
+    followersRequirement: (formData.get("followersRequirement") as string) ?? "",
+    dataSource: (formData.get("dataSource") as string) ?? "",
   };
 }
 
