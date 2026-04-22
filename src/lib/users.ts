@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import type { UserRole } from "@/types/auth";
 
 const USERS_FILE = path.join(process.cwd(), "data", "users.json");
 
@@ -9,6 +10,7 @@ export type LocalUser = {
   name: string;
   email: string;
   passwordHash: string;
+  role: UserRole;
   createdAt: string;
 };
 
@@ -33,7 +35,8 @@ export async function getUserByEmail(email: string): Promise<LocalUser | null> {
 export async function createUser(
   name: string,
   email: string,
-  passwordHash: string
+  passwordHash: string,
+  role: UserRole = "user"
 ): Promise<LocalUser> {
   const users = readUsers();
   const user: LocalUser = {
@@ -41,6 +44,7 @@ export async function createUser(
     name,
     email,
     passwordHash,
+    role,
     createdAt: new Date().toISOString(),
   };
   users.push(user);
