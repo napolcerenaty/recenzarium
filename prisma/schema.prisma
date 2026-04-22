@@ -26,6 +26,7 @@ model Publisher {
   instagramUrl       String      @default("")
   tiktokUrl          String      @default("")
   email              String      @default("")
+  submissionEmail    String      @default("")
   isImprint          Boolean     @default(false)
   parentId           String?
   parent             Publisher?  @relation("ImprintParent", fields: [parentId], references: [id])

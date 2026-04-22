@@ -15,38 +15,45 @@ async function requireAdmin() {
   return session;
 }
 
-export async function addPublisher(_prevState: unknown, formData: FormData) {
-  await requireAdmin();
-
-  const name = (formData.get("name") as string)?.trim();
-  const rawSlug = (formData.get("slug") as string)?.trim();
-
-  if (!name) return { error: "Nazwa jest wymagana." };
-
-  const slug = rawSlug || slugify(name);
-  const existing = await getPublisherBySlug(slug);
-  if (existing) return { error: "Wydawnictwo z tym slugiem już istnieje." };
-
+function extractPublisherFields(formData: FormData) {
   const isImprint = formData.get("isImprint") === "1";
   const rawParentId = (formData.get("parentId") as string)?.trim();
-  const parentId = isImprint && rawParentId ? rawParentId : null;
-
-  await createPublisher({
-    name,
-    slug,
+  return {
+    name: (formData.get("name") as string)?.trim(),
+    rawSlug: (formData.get("slug") as string)?.trim(),
     logoUrl: (formData.get("logoUrl") as string) ?? "",
     description: (formData.get("description") as string) ?? "",
     websiteUrl: (formData.get("websiteUrl") as string) ?? "",
     instagramUrl: (formData.get("instagramUrl") as string) ?? "",
     tiktokUrl: (formData.get("tiktokUrl") as string) ?? "",
     email: (formData.get("email") as string) ?? "",
+    submissionEmail: (formData.get("submissionEmail") as string) ?? "",
     isImprint,
-    parentId,
+    parentId: isImprint && rawParentId ? rawParentId : null,
     collaborationInfo: (formData.get("collaborationInfo") as string) ?? "",
     collaborationUrl: (formData.get("collaborationUrl") as string) ?? "",
-    isActive: true,
-  });
+  };
+}
 
+export async function addPublisher(_prevState: unknown, formData: FormData) {
+  await requireAdmin();
+  const fields = extractPublisherFields(formData);
+  if (!fields.name) return { error: "Nazwa jest wymagana." };
+  const slug = fields.rawSlug || slugify(fields.name);
+  const existing = await getPublisherBySlug(slug);
+  if (existing) return { error: "Wydawnictwo z tym slugiem już istnieje." };
+  await createPublisher({ ...fields, slug, isActive: true });
+  redirect("/admin/wydawnictwa");
+}
+
+export async function editPublisher(id: string, _prevState: unknown, formData: FormData) {
+  await requireAdmin();
+  const fields = extractPublisherFields(formData);
+  if (!fields.name) return { error: "Nazwa jest wymagana." };
+  const slug = fields.rawSlug || slugify(fields.name);
+  const existing = await getPublisherBySlug(slug);
+  if (existing && existing.id !== id) return { error: "Wydawnictwo z tym slugiem już istnieje." };
+  await updatePublisher(id, { ...fields, slug });
   redirect("/admin/wydawnictwa");
 }
 

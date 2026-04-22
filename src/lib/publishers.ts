@@ -34,6 +34,7 @@ export async function createPublisher(data: {
   instagramUrl: string;
   tiktokUrl: string;
   email: string;
+  submissionEmail: string;
   isImprint: boolean;
   parentId?: string | null;
   collaborationInfo: string;
@@ -54,6 +55,7 @@ export async function updatePublisher(
     instagramUrl: string;
     tiktokUrl: string;
     email: string;
+    submissionEmail: string;
     isImprint: boolean;
     parentId: string | null;
     collaborationInfo: string;

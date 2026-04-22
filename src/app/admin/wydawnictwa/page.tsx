@@ -51,7 +51,15 @@ export default async function AdminPublishersPage() {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <ToggleActiveButton id={p.id} isActive={p.isActive} />
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/admin/wydawnictwa/${p.slug}/edytuj`}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Edytuj
+                    </Link>
+                    <ToggleActiveButton id={p.id} isActive={p.isActive} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
