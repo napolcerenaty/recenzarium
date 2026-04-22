@@ -1,8 +1,7 @@
 "use server";
 
 import { signIn, signOut } from "@/auth";
-import { createUser, getUserByEmail } from "@/lib/users";
-import bcrypt from "bcryptjs";
+import { createUser, getUserByEmail, hashPassword } from "@/lib/users";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -38,7 +37,7 @@ export async function register(formData: FormData) {
     return { error: "Konto z tym adresem email już istnieje." };
   }
 
-  const passwordHash = await bcrypt.hash(password, 12);
+  const passwordHash = await hashPassword(password);
   await createUser(name, email, passwordHash);
 
   redirect("/logowanie?registered=1");
