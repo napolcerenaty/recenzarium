@@ -30,17 +30,17 @@ export async function Navbar() {
                 {link.label}
               </Link>
             ))}
-            {session?.user?.role === "admin" && (
-              <Link
-                href="/admin"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Admin
-              </Link>
-            )}
           </nav>
         </div>
         <div className="flex items-center gap-2">
+          {session?.user?.role === "admin" && (
+            <Link
+              href="/admin"
+              className="inline-flex items-center h-7 rounded-lg border border-border bg-background px-2.5 text-sm font-medium transition-colors hover:bg-muted dark:border-input dark:bg-input/30 dark:hover:bg-input/50"
+            >
+              Panel admina
+            </Link>
+          )}
           <ThemeToggle />
           {session?.user ? (
             <UserMenu name={session.user.name ?? session.user.email ?? "Użytkownik"} />

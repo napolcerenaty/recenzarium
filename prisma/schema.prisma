@@ -17,16 +17,24 @@ model User {
 }
 
 model Publisher {
-  id           String   @id @default(uuid())
-  name         String
-  slug         String   @unique
-  description  String   @default("")
-  websiteUrl   String   @default("")
-  instagramUrl String   @default("")
-  email        String   @default("")
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                 String      @id @default(uuid())
+  name               String
+  slug               String      @unique
+  logoUrl            String      @default("")
+  description        String      @default("")
+  websiteUrl         String      @default("")
+  instagramUrl       String      @default("")
+  tiktokUrl          String      @default("")
+  email              String      @default("")
+  isImprint          Boolean     @default(false)
+  parentId           String?
+  parent             Publisher?  @relation("ImprintParent", fields: [parentId], references: [id])
+  imprints           Publisher[] @relation("ImprintParent")
+  collaborationInfo  String      @default("")
+  collaborationUrl   String      @default("")
+  isActive           Boolean     @default(true)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
 }
 
 enum Role {

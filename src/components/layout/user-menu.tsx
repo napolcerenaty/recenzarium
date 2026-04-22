@@ -1,7 +1,6 @@
 "use client";
 
 import { logout } from "@/actions/auth";
-import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 
 type Props = {
@@ -16,9 +15,13 @@ export function UserMenu({ name }: Props) {
         {name}
       </span>
       <form action={logout}>
-        <Button variant="ghost" size="icon" aria-label="Wyloguj się">
-          <LogOut className="h-5 w-5" />
-        </Button>
+        <button
+          type="submit"
+          aria-label="Wyloguj się"
+          className="inline-flex items-center justify-center h-8 w-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+        >
+          <LogOut className="h-4 w-4" />
+        </button>
       </form>
     </div>
   );
