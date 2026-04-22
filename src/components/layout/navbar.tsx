@@ -30,6 +30,14 @@ export async function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {session?.user?.role === "admin" && (
+              <Link
+                href="/admin"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
         </div>
         <div className="flex items-center gap-2">
